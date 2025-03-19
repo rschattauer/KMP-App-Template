@@ -1,7 +1,7 @@
 package com.jetbrains.kmpapp.di
 
-import com.jetbrains.kmpapp.another.native.AnotherThingy
 import com.jetbrains.kmpapp.another.di.AnotherNativeModule
+import com.jetbrains.kmpapp.another.native.AnotherPlatformComponent
 import com.jetbrains.kmpapp.data.IdGenerator
 import com.jetbrains.kmpapp.data.InMemoryMuseumStorage
 import com.jetbrains.kmpapp.data.KtorMuseumApi
@@ -40,7 +40,7 @@ class DataModule {
     @Single
     fun httpClient(
         json: Json,
-        anotherThingy: AnotherThingy,
+        anotherThingy: AnotherPlatformComponent,
     ) = HttpClient {
         install(ContentNegotiation) {
             // TODO Fix API so it serves application/json
