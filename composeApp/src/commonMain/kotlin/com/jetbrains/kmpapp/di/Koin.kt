@@ -1,5 +1,7 @@
 package com.jetbrains.kmpapp.di
 
+import com.jetbrains.kmpapp.another.native.AnotherThingy
+import com.jetbrains.kmpapp.another.di.AnotherNativeModule
 import com.jetbrains.kmpapp.data.IdGenerator
 import com.jetbrains.kmpapp.data.InMemoryMuseumStorage
 import com.jetbrains.kmpapp.data.KtorMuseumApi
@@ -11,6 +13,8 @@ import com.jetbrains.kmpapp.screens.detail.DetailViewModel
 import com.jetbrains.kmpapp.screens.list.ListViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -34,10 +38,16 @@ class DataModule {
     fun json() = Json { ignoreUnknownKeys = true }
 
     @Single
-    fun httpClient(json : Json) = HttpClient {
+    fun httpClient(
+        json: Json,
+        anotherThingy: AnotherThingy,
+    ) = HttpClient {
         install(ContentNegotiation) {
             // TODO Fix API so it serves application/json
             json(json, contentType = ContentType.Any)
+        }
+        defaultRequest {
+            header("X-Custom-Header", anotherThingy.sayHello())
         }
     }
 }
@@ -46,14 +56,14 @@ class DataModule {
 @ComponentScan("com.jetbrains.kmpapp.screens")
 class ViewModelModule
 
-@Module(includes = [DataModule::class,ViewModelModule::class, NativeModule::class])
+@Module(includes = [DataModule::class, ViewModelModule::class, NativeModule::class, AnotherNativeModule::class])
 class AppModule
 
 @Module
 @ComponentScan("com.jetbrains.kmpapp.native")
 expect class NativeModule()
 
-fun initKoin(config : KoinAppDeclaration ?= null) {
+fun initKoin(config: KoinAppDeclaration? = null) {
     startKoin {
         modules(
             AppModule().module,

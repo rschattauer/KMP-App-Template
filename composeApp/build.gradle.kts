@@ -40,6 +40,8 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
+            implementation(projects.another)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
