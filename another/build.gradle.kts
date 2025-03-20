@@ -52,6 +52,7 @@ project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
 
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE", "false")
     arg("KOIN_LOG_TIMES","true")
 }
 

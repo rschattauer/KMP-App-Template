@@ -1,8 +1,8 @@
-package com.jetbrains.kmpapp.another.di
+package com.jetbrains.kmpapp.another
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 
 @Module
-@ComponentScan("com.jetbrains.kmpapp.another.native")
+@ComponentScan
 actual class AnotherNativeModule

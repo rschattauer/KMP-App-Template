@@ -1,16 +1,9 @@
-package com.jetbrains.kmpapp.di
+package com.jetbrains.kmpapp
 
-import com.jetbrains.kmpapp.another.di.AnotherNativeModule
+import com.jetbrains.kmpapp.another.AnotherNativeModule
 import com.jetbrains.kmpapp.another.native.AnotherPlatformComponent
 import com.jetbrains.kmpapp.data.IdGenerator
-import com.jetbrains.kmpapp.data.InMemoryMuseumStorage
-import com.jetbrains.kmpapp.data.KtorMuseumApi
-import com.jetbrains.kmpapp.data.MuseumApi
-import com.jetbrains.kmpapp.data.MuseumRepository
-import com.jetbrains.kmpapp.data.MuseumStorage
 import com.jetbrains.kmpapp.native.PlatformComponent
-import com.jetbrains.kmpapp.screens.detail.DetailViewModel
-import com.jetbrains.kmpapp.screens.list.ListViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -19,13 +12,10 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Module
-import org.koin.core.annotation.Provided
 import org.koin.core.annotation.Single
 import org.koin.core.context.startKoin
 import org.koin.core.parameter.parametersOf
-import org.koin.core.scope.Scope
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.ksp.generated.*
 import org.koin.mp.KoinPlatform
@@ -60,7 +50,7 @@ class ViewModelModule
 class AppModule
 
 @Module
-@ComponentScan("com.jetbrains.kmpapp.native")
+@ComponentScan
 expect class NativeModule()
 
 fun initKoin(config: KoinAppDeclaration? = null) {
